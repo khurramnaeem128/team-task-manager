@@ -99,3 +99,9 @@ Start the backend:
 
 ```bash
 cd backend
+
+## Development Workflow
+
+- Source code is maintained using Git and GitHub.
+- Features and documentation changes are developed on separate branches.
+- Changes can be reviewed before merging into the main branch.
