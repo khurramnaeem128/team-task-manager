@@ -1,0 +1,64 @@
+
+{
+ 
+  "services": {
+    "frontend": {
+      "root": "frontend/",
+      "rewrites": [
+        {
+          "source": "/(.*)",
+          "destination": "/index.html"
+        }
+      ]
+    },
+    "backend": {
+      "root": "backend/",
+      "entrypoint": "server.js",
+      "framework": "express"
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/auth",
+      "destination": {
+        "service": "backend"
+      }
+    },
+    {
+      "source": "/auth/(.*)",
+      "destination": {
+        "service": "backend"
+      }
+    },
+    {
+      "source": "/teams",
+      "destination": {
+        "service": "backend"
+      }
+    },
+    {
+      "source": "/teams/(.*)",
+      "destination": {
+        "service": "backend"
+      }
+    },
+    {
+      "source": "/tasks",
+      "destination": {
+        "service": "backend"
+      }
+    },
+    {
+      "source": "/tasks/(.*)",
+      "destination": {
+        "service": "backend"
+      }
+    },
+    {
+      "source": "/(.*)",
+      "destination": {
+        "service": "frontend"
+      }
+    }
+  ]
+}
