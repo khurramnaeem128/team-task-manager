@@ -1,12 +1,16 @@
 # Team Task Manager
 
-A full-stack web application for managing teams and tasks, built with React, Node.js, Express.js, and PostgreSQL. The application provides secure authentication, team management, task tracking, and a responsive dashboard.
+A full-stack web application for managing teams and tasks, built with React, Node.js, Express.js, and PostgreSQL. The application provides authentication, team management, task tracking, and a responsive dashboard.
+
+## Live Demo
+
+**Live Application:** https://team-task-manager-one-lac.vercel.app
 
 ## Features
 
 - User registration and login
 - Session-based authentication using Passport.js
-- Password hashing with bcrypt
+- Password hashing using bcryptjs
 - Create, view, update, and delete teams
 - Create, view, update, and delete tasks
 - Task status management: Pending, In Progress, and Completed
@@ -15,6 +19,7 @@ A full-stack web application for managing teams and tasks, built with React, Nod
 - Team membership management
 - REST API with input validation using Joi
 - PostgreSQL database integration
+- PostgreSQL-backed session storage
 - HTTP-only session cookies
 - Responsive interface for desktop and mobile devices
 
@@ -32,16 +37,18 @@ A full-stack web application for managing teams and tasks, built with React, Nod
 - Passport.js
 - Express Session
 - Joi validation
-- bcrypt
+- bcryptjs
 
 ### Database
 - PostgreSQL
-- `connect-pg-simple` for PostgreSQL-backed sessions
+- Neon PostgreSQL
+- connect-pg-simple for PostgreSQL-backed sessions
 
-### Development Tools
+### Development and Deployment
 - Git and GitHub
 - Visual Studio Code
 - npm
+- Vercel
 
 ## Project Structure
 
@@ -56,6 +63,7 @@ team-task-manager/
 │   ├── tasks.js
 │   ├── teams.js
 │   ├── validators.js
+│   ├── schema.sql
 │   └── package.json
 ├── frontend/
 │   ├── src/
@@ -67,15 +75,16 @@ team-task-manager/
 ├── .gitignore
 ├── package.json
 ├── package-lock.json
+├── vercel.json
 └── README.md
 ```
 
 ## Prerequisites
 
-Before running the project, install:
+Before running the project locally, install:
 
 - Node.js and npm
-- PostgreSQL
+- PostgreSQL or a Neon PostgreSQL database
 - Git
 
 ## Local Installation
@@ -89,127 +98,37 @@ cd team-task-manager
 
 ### 2. Install Dependencies
 
-Install root dependencies:
+Install the backend dependencies:
 
 ```bash
-npm install
+npm install --prefix backend
 ```
 
-Install backend dependencies:
+Install the frontend dependencies:
 
 ```bash
-cd backend
-npm install
-```
-
-Install frontend dependencies:
-
-```bash
-cd ../frontend
-npm install
+npm install --prefix frontend
 ```
 
 ### 3. Configure Environment Variables
 
 Create a `.env` file inside the `backend` directory.
 
-Add your own local PostgreSQL credentials and session secret:
+Configure your local database connection and session secret:
 
 ```env
 PORT=5000
-DB_HOST=localhost
-DB_PORT=5433
-DB_NAME=team_task_manager
-DB_USER=your_postgres_username
-DB_PASSWORD=your_postgres_password
+DATABASE_URL=your_postgresql_connection_string
 SESSION_SECRET=your_long_random_secret
+NODE_ENV=development
 ```
 
-Replace the example values with your actual local configuration. Never commit `.env` files, database passwords, or production secrets to GitHub.
+Replace the example values with your own configuration. Never commit `.env` files, database passwords, or production secrets to GitHub.
 
 ### 4. Set Up the Database
 
-Create a PostgreSQL database named `team_task_manager`.
+The database schema is provided in `backend/schema.sql`.
 
-Apply the project's database schema to create the required tables for users, teams, team memberships, and tasks.
+Create or select a PostgreSQL database, configure `DATABASE_URL`, and execute the schema against that database. Ensure the required tables are created before running the application.
 
-Ensure PostgreSQL is running and that the credentials in `backend/.env` are correct.
-
-### 5. Start the Backend
-
-Open a terminal in the project directory:
-
-```bash
-cd backend
-node server.js
-```
-
-The backend normally runs at:
-
-`http://localhost:5000`
-
-### 6. Start the Frontend
-
-Open a second terminal:
-
-```bash
-cd frontend
-npm run dev
-```
-
-Open the local frontend URL displayed in the terminal, normally:
-
-`http://localhost:5173`
-
-## API Overview
-
-| Route | Purpose |
-|---|---|
-| `/auth` | Registration, login, session information, and logout |
-| `/teams` | Team creation, retrieval, updating, and deletion |
-| `/tasks` | Task creation, retrieval, updating, and deletion |
-
-Protected endpoints require an authenticated session. Request validation and team membership checks are used where implemented.
-
-## Security
-
-- Passwords are hashed using bcrypt.
-- Passport.js manages authentication.
-- Express Session maintains authenticated sessions.
-- PostgreSQL stores session data.
-- HTTP-only cookies help protect session cookies from client-side JavaScript access.
-- Joi validates task request data.
-- Authentication middleware protects restricted endpoints.
-- Environment variables keep local credentials out of source code.
-
-Production deployment requires appropriate HTTPS cookie settings, a strong session secret, and secure database credentials.
-
-## Git Workflow
-
-The project uses Git for version control and GitHub for source-code hosting.
-
-- `main` is the primary branch.
-- Feature and documentation changes can be developed on separate branches.
-- Changes can be reviewed through Pull Requests before merging into `main`.
-
-## Project Status
-
-- Frontend and backend implemented.
-- PostgreSQL configured for local development.
-- Core authentication, team, and task functionality tested locally.
-- GitHub repository created and source code uploaded.
-- Google Cloud deployment and final live testing are pending.
-
-## Future Improvements
-
-- Deploy the application and database to Google Cloud.
-- Add role-based permissions for team owners and members.
-- Add email invitations and task reminders.
-- Improve automated testing and error handling.
-
-## Author
-
-**Khurram Naeem**
-
-- GitHub: [khurramnaeem128](https://github.com/khurramnaeem128)
-- Repository: [Team Task Manager](https://github.com/khurramnaeem128/team-task-manager)
+### 5. Start
