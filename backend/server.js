@@ -2,6 +2,7 @@
 require('dotenv').config();
 
 const express = require('express');
+const path = require('path');
 const cors = require('cors');
 const session = require('express-session');
 const passport = require('passport');
@@ -17,6 +18,7 @@ const taskRoutes = require('./tasks');
 
 
 const app = express();
+app.set('trust proxy', 1);
 const PORT = process.env.PORT || 5000;
 
 // 1. CORS configuration
@@ -43,7 +45,7 @@ app.use(
     saveUninitialized: false,
     cookie: {
       httpOnly: true,
-      secure: false, // Local development only
+      secure: process.env.NODE_ENV === 'production',
       sameSite: 'lax',
       maxAge: 1000 * 60 * 60 * 24,
     },
@@ -63,11 +65,13 @@ app.use('/tasks', taskRoutes);
 
 
 // 6. Test route
+
+app.use(express.static(path.join(__dirname, '../frontend/dist')));
+
 app.get('/', (req, res) => {
-  res.json({
-    message: 'Team Task Manager API is running!',
-  });
+  res.sendFile(path.join(__dirname, '../frontend/dist/index.html'));
 });
+
 
 // 7. Start server
 app.listen(PORT, () => {
