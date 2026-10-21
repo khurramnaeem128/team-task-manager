@@ -131,4 +131,99 @@ The database schema is provided in `backend/schema.sql`.
 
 Create or select a PostgreSQL database, configure `DATABASE_URL`, and execute the schema against that database. Ensure the required tables are created before running the application.
 
-### 5. Start
+### 5. Start the Backend
+
+From the project root, run:
+
+```bash
+npm start
+```
+
+The backend normally runs at:
+
+```text
+http://localhost:5000
+```
+
+### 6. Start the Frontend
+
+Open a second terminal and run:
+
+```bash
+npm run dev --prefix frontend
+```
+
+Open the local frontend URL shown in the terminal, normally:
+
+```text
+http://localhost:5173
+```
+
+Ensure local frontend API requests are configured to reach the backend server.
+
+## API Overview
+
+| Route | Purpose |
+|---|---|
+| `/auth` | Registration, login, session information, and logout |
+| `/teams` | Team creation, retrieval, updating, and deletion |
+| `/tasks` | Task creation, retrieval, updating, and deletion |
+
+Protected endpoints require an authenticated session. Request validation and team membership checks are applied where implemented.
+
+## Security
+
+- Passwords are hashed using bcryptjs.
+- Passport.js manages authentication.
+- Express Session maintains authenticated sessions.
+- PostgreSQL stores session data.
+- HTTP-only cookies help prevent client-side JavaScript from accessing session cookies.
+- Joi validates applicable request data.
+- Authentication middleware protects restricted endpoints.
+- Environment variables keep credentials out of source code.
+- Production deployment uses a secure session secret and appropriate cookie settings.
+
+Never publish your database connection string or session secret.
+
+## Deployment
+
+The application is deployed on **Vercel**.
+
+**Live Demo:** https://team-task-manager-one-lac.vercel.app
+
+The application uses Neon PostgreSQL for its database and Vercel environment variables for production configuration.
+
+## Git Workflow
+
+- Git is used for version control.
+- GitHub hosts the source code.
+- `main` is the primary branch.
+- Changes can be developed on separate branches and reviewed before merging.
+
+## Project Status
+
+- Frontend and backend implemented.
+- PostgreSQL database configured.
+- User registration and login tested.
+- Team and task functionality tested.
+- Source code uploaded to GitHub.
+- Application deployed on Vercel.
+- Live application tested successfully.
+
+## Future Improvements
+
+- Add role-based permissions for team owners and members.
+- Add email invitations and task reminders.
+- Improve automated testing and error handling.
+- Add more advanced task filtering and reporting.
+
+## Author
+
+**Khurram Naeem**
+
+- GitHub: https://github.com/khurramnaeem128
+- LinkedIn: https://www.linkedin.com/in/khurramnaeem128/
+
+## Repository
+
+https://github.com/khurramnaeem128/team-task-manager
